@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>王小美 | 個人名片網站</title>
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family: "Segoe UI", "Noto Sans TC", sans-serif;
+    }
+
+    body{
+        background:
+            radial-gradient(circle at top right,#1f3b73 0%,transparent 25%),
+            radial-gradient(circle at bottom left,#0f9b8e 0%,transparent 20%),
+            linear-gradient(135deg,#050816,#0d1326,#101b38);
+        min-height:100vh;
+        color:#fff;
+        overflow-x:hidden;
+    }
+
+    .background-grid{
+        position:fixed;
+        inset:0;
+        background-image:
+            linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+        background-size:40px 40px;
+        z-index:0;
+    }
+
+    .container{
+        position:relative;
+        z-index:1;
+        width:90%;
+        max-width:1100px;
+        margin:60px auto;
+    }
+
+    .card{
+        backdrop-filter: blur(14px);
+        background: rgba(255,255,255,0.08);
+        border:1px solid rgba(255,255,255,0.12);
+        border-radius:28px;
+        overflow:hidden;
+        box-shadow:
+            0 10px 40px rgba(0,0,0,0.45),
+            0 0 30px rgba(0,255,255,0.08);
+    }
+
+    .hero{
+        display:flex;
+        flex-wrap:wrap;
+        align-items:center;
+        justify-content:space-between;
+        padding:60px;
+        gap:40px;
+    }
+
+    .left{
+        flex:1;
+        min-width:280px;
+    }
+
+    .tag{
+        display:inline-block;
+        padding:8px 18px;
+        border-radius:50px;
+        background:rgba(0,255,255,0.12);
+        border:1px solid rgba(0,255,255,0.25);
+        color:#7ffcff;
+        font-size:14px;
+        letter-spacing:1px;
+        margin-bottom:24px;
+    }
+
+    h1{
+        font-size:64px;
+        font-weight:700;
+        margin-bottom:12px;
+        background:linear-gradient(to right,#ffffff,#70e1ff);
+        -webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;
+    }
+
+    .subtitle{
+        font-size:22px;
+        color:#c8d5ff;
+        margin-bottom:28px;
+    }
+
+    .description{
+        line-height:1.9;
+        color:#c0c9e6;
+        max-width:600px;
+        margin-bottom:32px;
+    }
+
+    .info-group{
+        display:flex;
+        flex-direction:column;
+        gap:18px;
+    }
+
+    .info-box{
+        display:flex;
+        align-items:center;
+        gap:16px;
+        background:rgba(255,255,255,0.05);
+        border:1px solid rgba(255,255,255,0.08);
+        padding:18px 22px;
+        border-radius:18px;
+        transition:0.3s;
+    }
+
+    .info-box:hover{
+        transform:translateY(-3px);
+        background:rgba(0,255,255,0.08);
+        border-color:rgba(0,255,255,0.3);
+    }
+
+    .icon{
+        width:48px;
+        height:48px;
+        border-radius:14px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        background:linear-gradient(135deg,#00c6ff,#0072ff);
+        font-size:22px;
+        box-shadow:0 0 20px rgba(0,198,255,0.35);
+    }
+
+    .info-content h3{
+        font-size:15px;
+        color:#7ffcff;
+        margin-bottom:4px;
+    }
+
+    .info-content p,
+    .info-content a{
+        color:#ffffff;
+        text-decoration:none;
+        word-break:break-all;
+    }
+
+    .right{
+        width:320px;
+        min-width:260px;
+    }
+
+    .tech-panel{
+        position:relative;
+        border-radius:30px;
+        padding:40px;
+        background:
+            linear-gradient(145deg,rgba(255,255,255,0.12),rgba(255,255,255,0.04));
+        border:1px solid rgba(255,255,255,0.12);
+        overflow:hidden;
+    }
+
+    .circle{
+        width:180px;
+        height:180px;
+        border-radius:50%;
+        margin:auto;
+        position:relative;
+        background:
+            radial-gradient(circle,#00f2fe 0%,#4facfe 35%,#0b1025 75%);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:26px;
+        font-weight:bold;
+        color:#fff;
+        box-shadow:
+            0 0 50px rgba(0,255,255,0.35),
+            inset 0 0 30px rgba(255,255,255,0.15);
+        animation:float 4s ease-in-out infinite;
+    }
+
+    @keyframes float{
+        0%{transform:translateY(0px);}
+        50%{transform:translateY(-12px);}
+        100%{transform:translateY(0px);}
+    }
+
+    .skills{
+        margin-top:36px;
+    }
+
+    .skills h2{
+        margin-bottom:18px;
+        font-size:22px;
+        color:#7ffcff;
+    }
+
+    .skill{
+        margin-bottom:18px;
+    }
+
+    .skill-title{
+        display:flex;
+        justify-content:space-between;
+        margin-bottom:8px;
+        font-size:14px;
+    }
+
+    .bar{
+        height:10px;
+        border-radius:20px;
+        background:rgba(255,255,255,0.08);
+        overflow:hidden;
+    }
+
+    .bar-fill{
+        height:100%;
+        width:0%;
+        border-radius:20px;
+        background:linear-gradient(to right,#00f2fe,#4facfe);
+        transition:2s;
+    }
+
+    .cert-section{
+        padding:0 60px 60px;
+    }
+
+    .cert-title{
+        font-size:30px;
+        margin-bottom:26px;
+        color:#ffffff;
+    }
+
+    .cert-grid{
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+        gap:24px;
+    }
+
+    .cert-card{
+        background:rgba(255,255,255,0.05);
+        border:1px solid rgba(255,255,255,0.08);
+        border-radius:22px;
+        padding:26px;
+        transition:0.3s;
+    }
+
+    .cert-card:hover{
+        transform:translateY(-6px);
+        border-color:rgba(0,255,255,0.3);
+        box-shadow:0 10px 25px rgba(0,255,255,0.12);
+    }
+
+    .cert-card h3{
+        color:#7ffcff;
+        margin-bottom:10px;
+    }
+
+    .footer{
+        text-align:center;
+        color:#93a4d1;
+        padding:30px;
+        font-size:14px;
+    }
+
+    @media(max-width:768px){
+
+        .hero{
+            padding:40px 28px;
+        }
+
+        h1{
+            font-size:46px;
+        }
+
+        .subtitle{
+            font-size:18px;
+        }
+
+        .cert-section{
+            padding:0 28px 40px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="background-grid"></div>
+
+<div class="container">
+    <div class="card">
+
+        <section class="hero">
+
+            <div class="left">
+
+                <div class="tag">PERSONAL DIGITAL CARD</div>
+
+                <h1>王小美</h1>
+
+                <div class="subtitle">
+                    資訊科技 × 人工智慧專家
+                </div>
+
+                <div class="description">
+                    專注於資訊科技、人工智慧與數位創新應用，
+                    擅長結合技術與創意，打造高效能且具未來感的智慧解決方案。
+                    致力於推動 AI 與科技應用於企業與數位服務之中。
+                </div>
+
+                <div class="info-group">
+
+                    <div class="info-box">
+                        <div class="icon">✉</div>
+                        <div class="info-content">
+                            <h3>電子郵件</h3>
+                            <p>
+                                <a href="mailto:aaa@abc.com.tw">
+                                    aaa@abc.com.tw
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <div class="icon">🌐</div>
+                        <div class="info-content">
+                            <h3>個人網站</h3>
+                            <p>
+                                <a href="https://c1189999999.gowp.space" target="_blank">
+                                    c1189999999.gowp.space
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="right">
+
+                <div class="tech-panel">
+
+                    <div class="circle">
+                        AI
+                    </div>
+
+                    <div class="skills">
+
+                        <h2>專業技能</h2>
+
+                        <div class="skill">
+                            <div class="skill-title">
+                                <span>人工智慧</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="bar">
+                                <div class="bar-fill" data-width="95%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill">
+                            <div class="skill-title">
+                                <span>資訊科技</span>
+                                <span>92%</span>
+                            </div>
+                            <div class="bar">
+                                <div class="bar-fill" data-width="92%"></div>
+                            </div>
+                        </div>
+
+                        <div class="skill">
+                            <div class="skill-title">
+                                <span>系統整合</span>
+                                <span>88%</span>
+                            </div>
+                            <div class="bar">
+                                <div class="bar-fill" data-width="88%"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="cert-section">
+
+            <h2 class="cert-title">專業證照</h2>
+
+            <div class="cert-grid">
+
+                <div class="cert-card">
+                    <h3>AI 應用工程師</h3>
+                    <p>
+                        專精人工智慧模型應用與智慧系統整合。
+                    </p>
+                </div>
+
+                <div class="cert-card">
+                    <h3>雲端技術認證</h3>
+                    <p>
+                        熟悉雲端部署、系統維運與高可用性架構。
+                    </p>
+                </div>
+
+                <div class="cert-card">
+                    <h3>資訊安全基礎認證</h3>
+                    <p>
+                        具備資訊安全與網路防護基礎能力。
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <div class="footer">
+            © 2026 王小美 ｜ Professional Tech Portfolio
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    // 技能條動畫
+    window.addEventListener("load", () => {
+
+        const bars = document.querySelectorAll(".bar-fill");
+
+        bars.forEach(bar => {
+            const width = bar.getAttribute("data-width");
+
+            setTimeout(() => {
+                bar.style.width = width;
+            }, 300);
+        });
+
+    });
+
+</script>
+
+</body>
+</html>
